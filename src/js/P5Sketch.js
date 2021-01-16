@@ -4,12 +4,14 @@ import * as p5 from "p5";
 const P5Sketch = () => {
     const Sketch = p => {
 
+        p5.canvas = null;
+
         p.canvasWidth = window.innerWidth;
 
         p.canvasHeight = window.innerHeight;
 
         p.setup = () => {
-            p.createCanvas(p.canvasWidth, p.canvasHeight);
+            p5.canvas = p.createCanvas(p.canvasWidth, p.canvasHeight);
         };
 
         p.draw = () => {
