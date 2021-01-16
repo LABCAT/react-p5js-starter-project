@@ -2,34 +2,32 @@ import React, { useEffect } from "react";
 import * as p5 from "p5";
 
 const P5Sketch = () => {
-    const Sketch = p5 => {
+    const Sketch = p => {
 
-        p5.canvasWidth = window.innerWidth;
+        p.canvasWidth = window.innerWidth;
 
-        p5.canvasHeight = window.innerHeight;
+        p.canvasHeight = window.innerHeight;
 
-        p5.setup = () => {
-            p5.createCanvas(p5.canvasWidth, p5.canvasHeight);
+        p.setup = () => {
+            p.createCanvas(p.canvasWidth, p.canvasHeight);
         };
 
-        p5.draw = () => {
-            p5.background(0);
+        p.draw = () => {
+            p.background(0);
         };
 
-        p5.updateCanvasDimensions = () => {
-            p5.canvasWidth = window.innerWidth;
-            p5.canvasHeight = window.innerHeight;
-            p5.createCanvas(p5.canvasWidth, p5.canvasHeight);
-            p5.redraw();
+        p.updateCanvasDimensions = () => {
+            p.canvasWidth = window.innerWidth;
+            p.canvasHeight = window.innerHeight;
+            p.createCanvas(p.canvasWidth, p.canvasHeight);
+            p.redraw();
         }
 
         if (window.attachEvent) {
             window.attachEvent(
                 'onresize',
                 function () {
-                    console.log(window.innerWidth);
-                    console.log('resize');
-                    p5.updateCanvasDimensions();
+                    p.updateCanvasDimensions();
                 }
             );
         }
@@ -37,9 +35,7 @@ const P5Sketch = () => {
             window.addEventListener(
                 'resize',
                 function () {
-                    console.log(window.innerWidth);
-                    console.log('resize');
-                    p5.updateCanvasDimensions();
+                    p.updateCanvasDimensions();
                 },
                 true
             );
