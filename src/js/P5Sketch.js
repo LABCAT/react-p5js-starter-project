@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import * as p5 from "p5";
 
 const P5Sketch = () => {
+    const sketchRef = useRef();
+
     const Sketch = p => {
 
         p.canvas = null;
@@ -48,12 +50,12 @@ const P5Sketch = () => {
     };
 
     useEffect(() => {
-        new p5(Sketch);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        new p5(Sketch, sketchRef.current);
     }, []);
 
     return (
-        <></>
+        <div ref={sketchRef}>
+        </div>
     );
 };
 
