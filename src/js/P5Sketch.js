@@ -1,8 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import "./helpers/Globals";
-import "p5/lib/addons/p5.sound";
 import * as p5 from "p5";
-import ShuffleArray from "./functions/ShuffleArray.js";
 
 const P5Sketch = () => {
     const sketchRef = useRef();
