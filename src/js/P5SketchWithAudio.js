@@ -3,6 +3,7 @@ import "./helpers/Globals";
 import "p5/lib/addons/p5.sound";
 import * as p5 from "p5";
 import { Midi } from '@tonejs/midi'
+import PlayIcon from './functions/PlayIcon.js';
 
 import audio from "../audio/circles-no-3.ogg";
 import midi from "../audio/circles-no-3.mid";
@@ -30,6 +31,8 @@ const P5SketchWithAudio = () => {
                     const noteSet1 = result.tracks[5].notes; // Synth 1
                     p.scheduleCueSet(noteSet1, 'executeCueSet1');
                     p.audioLoaded = true;
+                    document.getElementById("loader").classList.add("loading--complete");
+                    document.getElementById("play-icon").classList.remove("fade-out");
                 }
             );
             
@@ -37,6 +40,7 @@ const P5SketchWithAudio = () => {
 
         p.preload = () => {
             p.song = p.loadSound(audio, p.loadMidi);
+            p.song.onended(p.logCredits);
         }
 
         p.scheduleCueSet = (noteSet, callbackName)  => {
@@ -78,18 +82,38 @@ const P5SketchWithAudio = () => {
                     if (parseInt(p.song.currentTime()) >= parseInt(p.song.buffer.duration)) {
                         p.reset();
                     }
-                    //document.getElementById("play-icon").classList.add("fade-out");
+                    document.getElementById("play-icon").classList.add("fade-out");
                     p.canvas.addClass("fade-in");
                     p.song.play();
                 }
             }
         }
 
+        p.creditsLogged = false;
+
+        p.logCredits = () => {
+            if (
+                !p.creditsLogged &&
+                parseInt(p.song.currentTime()) >= parseInt(p.song.buffer.duration)
+            ) {
+                p.creditsLogged = true;
+                    console.log(
+                    "Music By: http://labcat.nz/",
+                    "\n",
+                    "Animation By: https://github.com/LABCAT/"
+                );
+                p.song.stop();
+            }
+        };
+
+        p.reset = () => {
+
+        }
+
         p.updateCanvasDimensions = () => {
             p.canvasWidth = window.innerWidth;
             p.canvasHeight = window.innerHeight;
-            p.createCanvas(p.canvasWidth, p.canvasHeight);
-            p.redraw();
+            p.canvas = p.resizeCanvas(p.canvasWidth, p.canvasHeight);
         }
 
         if (window.attachEvent) {
@@ -120,6 +144,7 @@ const P5SketchWithAudio = () => {
 
     return (
         <div ref={sketchRef}>
+            <PlayIcon />
         </div>
     );
 };
