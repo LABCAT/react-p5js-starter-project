@@ -23,8 +23,7 @@ const P5Sketch = () => {
         p.updateCanvasDimensions = () => {
             p.canvasWidth = window.innerWidth;
             p.canvasHeight = window.innerHeight;
-            p.createCanvas(p.canvasWidth, p.canvasHeight);
-            p.redraw();
+            p.canvas = p.resizeCanvas(p.canvasWidth, p.canvasHeight);
         }
 
         if (window.attachEvent) {
