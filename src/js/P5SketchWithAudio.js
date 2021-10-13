@@ -43,15 +43,17 @@ const P5SketchWithAudio = () => {
             p.song.onended(p.logCredits);
         }
 
-        p.scheduleCueSet = (noteSet, callbackName)  => {
-            let lastTicks = -1;
+        p.scheduleCueSet = (noteSet, callbackName, poly = false)  => {
+            let lastTicks = -1,
+                currentCue = 1;
             for (let i = 0; i < noteSet.length; i++) {
                 const note = noteSet[i],
                     { ticks, time } = note;
-                if(ticks !== lastTicks){
-                    note.currentCue = i + 1;
+                if(ticks !== lastTicks || poly){
+                    note.currentCue = currentCue;
                     p.song.addCue(time, p[callbackName], note);
                     lastTicks = ticks;
+                    currentCue++;
                 }
             }
         } 
