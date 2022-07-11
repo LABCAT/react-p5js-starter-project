@@ -76,6 +76,8 @@ const P5SketchWithAudio = () => {
             p.ellipse(p.width / 2, p.height / 2, p.width / 4, p.width / 4);
         }
 
+        p.hasStarted = false;
+
         p.mousePressed = () => {
             if(p.audioLoaded){
                 if (p.song.isPlaying()) {
@@ -83,10 +85,33 @@ const P5SketchWithAudio = () => {
                 } else {
                     if (parseInt(p.song.currentTime()) >= parseInt(p.song.buffer.duration)) {
                         p.reset();
+                        window.dataLayer.push(
+                            { 
+                                'event': 'play-animation',
+                                'animation': {
+                                    'title': document.title,
+                                    'location': window.location.href,
+                                    'action': 'replaying'
+                                }
+                            }
+                        );
                     }
                     document.getElementById("play-icon").classList.add("fade-out");
                     p.canvas.addClass("fade-in");
                     p.song.play();
+                    if (typeof window.dataLayer !== typeof undefined && !p.hasStarted){
+                        window.dataLayer.push(
+                            { 
+                                'event': 'play-animation',
+                                'animation': {
+                                    'title': document.title,
+                                    'location': window.location.href,
+                                    'action': 'start playing'
+                                }
+                            }
+                        );
+                        p.hasStarted = false
+                    }
                 }
             }
         }
