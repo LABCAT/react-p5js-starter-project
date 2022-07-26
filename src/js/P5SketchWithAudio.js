@@ -85,16 +85,18 @@ const P5SketchWithAudio = () => {
                 } else {
                     if (parseInt(p.song.currentTime()) >= parseInt(p.song.buffer.duration)) {
                         p.reset();
-                        window.dataLayer.push(
-                            { 
-                                'event': 'play-animation',
-                                'animation': {
-                                    'title': document.title,
-                                    'location': window.location.href,
-                                    'action': 'replaying'
+                        if (typeof window.dataLayer !== typeof undefined){
+                            window.dataLayer.push(
+                                { 
+                                    'event': 'play-animation',
+                                    'animation': {
+                                        'title': document.title,
+                                        'location': window.location.href,
+                                        'action': 'replaying'
+                                    }
                                 }
-                            }
-                        );
+                            );
+                        }
                     }
                     document.getElementById("play-icon").classList.add("fade-out");
                     p.canvas.addClass("fade-in");
